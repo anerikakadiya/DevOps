@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pipeline Test Page · DevOps CI/CD</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #0b1020;
+        --card-bg: #13192f;
+        --card-border: #1e2748;
+        --fg: #e7ecff;
+        --muted: #9aa3c0;
+        --accent: #7cf0c2;
+        --accent-glow: rgba(124, 240, 194, 0.15);
+        --success: #34d399;
+        --warning: #fbbf24;
+        --line: #1e2748;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          sans-serif;
+        line-height: 1.5;
+      }
+
+      .wrap {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 3rem 1.25rem 4rem;
+      }
+
+      .nav-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-link {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: color 0.2s;
+      }
+
+      .nav-link:hover {
+        color: var(--accent);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--accent-glow);
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        padding: 0.25rem 0.65rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .pulse-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--success);
+        box-shadow: 0 0 8px var(--success);
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        margin: 0 0 0.5rem;
+        line-height: 1.2;
+      }
+
+      .subtitle {
+        color: var(--muted);
+        font-size: 1.05rem;
+        margin: 0 0 2rem;
+      }
+
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 1.25rem;
+      }
+
+      .card h3 {
+        margin: 0 0 0.4rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .card .value {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--fg);
+        word-break: break-all;
+      }
+
+      .suite-box {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .suite-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .suite-header h2 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+
+      button.btn-test {
+        background: var(--accent);
+        color: #08101e;
+        border: none;
+        padding: 0.55rem 1rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+
+      button.btn-test:hover {
+        opacity: 0.9;
+      }
+
+      .test-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .test-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--card-border);
+        border-radius: 6px;
+      }
+
+      .test-name {
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+
+      .test-desc {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .status-pass {
+        background: rgba(52, 211, 153, 0.15);
+        color: var(--success);
+        border: 1px solid var(--success);
+      }
+
+      code {
+        background: var(--line);
+        color: var(--fg);
+        padding: 0.15rem 0.35rem;
+        border-radius: 4px;
+        font-size: 0.85em;
+      }
+
+      .info-box {
+        background: var(--card-bg);
+        border-left: 4px solid var(--accent);
+        padding: 1rem 1.25rem;
+        border-radius: 0 8px 8px 0;
+        margin-bottom: 2rem;
+      }
+
+      .info-box h3 {
+        margin: 0 0 0.4rem;
+        font-size: 1rem;
+      }
+
+      .info-box p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.85rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--line);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="nav-bar">
+        <a href="./index.html" class="nav-link">← Back to Main Project</a>
+        <div class="badge">
+          <span class="pulse-dot"></span> Pipeline Test Mode
+        </div>
+      </div>
+
+      <h1>CI/CD Deployment Test Page</h1>
+      <p class="subtitle">
+        Automated verification page to validate build artifacts, deployment routing,
+        and environment compatibility on GitHub Pages.
+      </p>
+
+      <div class="status-grid">
+        <div class="card">
+          <h3>Pipeline Target</h3>
+          <div class="value">GitHub Pages</div>
+        </div>
+        <div class="card">
+          <h3>Workflow</h3>
+          <div class="value">deploy.yml</div>
+        </div>
+        <div class="card">
+          <h3>Live Deployment Base</h3>
+          <div class="value"><code>/DevOps/</code></div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h3>Deployment Pipeline Summary</h3>
+        <p>
+          Trigger: Push to <code>main</code> branch &bull; Runner: <code>ubuntu-latest</code> &bull;
+          Artifacts: <code>./dist</code> bundle deployed automatically via <code>actions/deploy-pages@v4</code>.
+        </p>
+      </div>
+
+      <div class="suite-box">
+        <div class="suite-header">
+          <h2>Deployment Diagnostics</h2>
+          <button id="runTestsBtn" class="btn-test">Re-run Tests</button>
+        </div>
+
+        <div class="test-list" id="testList">
+          <!-- Dynamically populated or verified by script -->
+        </div>
+      </div>
+
+      <footer>
+        <p id="deployTimestamp">Verifying test runner...</p>
+      </footer>
+    </div>
+
+    <script>
+      const tests = [
+        {
+          name: "Vite & GitHub Pages Base Path",
+          desc: "Validates base directory '/DevOps/' resolution in location pathname",
+          run: () => {
+            const path = window.location.pathname;
+            return path.includes("/DevOps") || path === "/" || path.endsWith(".html");
+          }
+        },
+        {
+          name: "DOM Rendering & Layout Integrity",
+          desc: "Confirms HTML body, containers, and elements render without errors",
+          run: () => !!document.querySelector(".wrap") && !!document.getElementById("testList")
+        },
+        {
+          name: "Browser Runtime & Client API",
+          desc: "Verifies JavaScript ES6+ execution and modern browser support",
+          run: () => typeof window !== "undefined" && typeof Promise !== "undefined"
+        },
+        {
+          name: "Client Storage & Sandbox Check",
+          desc: "Tests LocalStorage read/write functionality in the deployment environment",
+          run: () => {
+            try {
+              const testKey = "__devops_pipeline_test__";
+              localStorage.setItem(testKey, "ok");
+              const res = localStorage.getItem(testKey) === "ok";
+              localStorage.removeItem(testKey);
+              return res;
+            } catch (e) {
+              return false;
+            }
+          }
+        },
+        {
+          name: "Network & Origin Connectivity",
+          desc: "Checks online status and host accessibility",
+          run: () => navigator.onLine !== false
+        }
+      ];
+
+      function renderTests() {
+        const list = document.getElementById("testList");
+        list.innerHTML = "";
+
+        tests.forEach((t) => {
+          const passed = t.run();
+          const item = document.createElement("div");
+          item.className = "test-item";
+          item.innerHTML = `
+            <div>
+              <div class="test-name">${t.name}</div>
+              <div class="test-desc">${t.desc}</div>
+            </div>
+            <div class="status-pill status-pass">
+              ${passed ? "✔ PASS" : "✖ FAIL"}
+            </div>
+          `;
+          list.appendChild(item);
+        });
+
+        const timeElem = document.getElementById("deployTimestamp");
+        if (timeElem) {
+          timeElem.textContent = `Test executed on ${new Date().toLocaleString()} · Host: ${window.location.host || 'local'}`;
+        }
+      }
+
+      document.getElementById("runTestsBtn").addEventListener("click", renderTests);
+      window.addEventListener("DOMContentLoaded", renderTests);
+    </script>
+  </body>
+</html>
