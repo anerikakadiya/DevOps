@@ -3,53 +3,104 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DevOps: GitHub Pages CI/CD</title>
+    <title>Your Name · DevOps portfolio</title>
+    <meta name="description" content="Portfolio of a developer learning DevOps: CI/CD, GitHub Actions and automated deployments." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <main class="wrap">
-      <p class="eyebrow">Beginner DevOps Project</p>
-      <h1>Shipped by GitHub Actions.</h1>
-      <p class="lede">
-        A tiny static site that exists to prove one thing: every push to
-        <code>main</code> flows through CI, then lands on GitHub Pages
-        automatically.
-      </p>
+    <header class="top">
+      <a class="brand" href="#top">Your Name</a>
+      <nav aria-label="Main">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
 
-      <section class="pipeline" aria-label="Pipeline">
-        <div class="step">
-          <span class="dot" aria-hidden="true"></span>
-          <div>
-            <h2>1. Push</h2>
-            <p>Commit lands on <code>main</code>.</p>
-          </div>
+    <main id="top">
+      <section class="hero">
+        <div class="hero-text">
+          <h1>I build things that deploy themselves.</h1>
+          <p class="lede">
+            I'm a developer learning DevOps. I care about small, repeatable
+            pipelines: push code, let the machines check it, and see it live
+            minutes later.
+          </p>
+          <p class="actions">
+            <a class="btn" href="#projects">See my projects</a>
+            <a class="btn ghost" href="#contact">Get in touch</a>
+          </p>
         </div>
-        <div class="step">
-          <span class="dot" aria-hidden="true"></span>
-          <div>
-            <h2>2. CI</h2>
-            <p>Install deps, run <code>npm run build</code>.</p>
+
+        <aside class="run" aria-label="Live pipeline run">
+          <div class="run-head">
+            <span id="run-title">Pipeline run</span>
+            <button id="replay" class="replay" type="button">Replay</button>
           </div>
-        </div>
-        <div class="step">
-          <span class="dot" aria-hidden="true"></span>
-          <div>
-            <h2>3. CD</h2>
-            <p>Upload <code>dist/</code> and deploy to Pages.</p>
-          </div>
-        </div>
+          <ol id="stages" class="stages" aria-live="polite">
+            <li data-state="idle"><span class="mark"></span><span class="name">Checkout</span><span class="time"></span></li>
+            <li data-state="idle"><span class="mark"></span><span class="name">Install</span><span class="time"></span></li>
+            <li data-state="idle"><span class="mark"></span><span class="name">Build</span><span class="time"></span></li>
+            <li data-state="idle"><span class="mark"></span><span class="name">Deploy</span><span class="time"></span></li>
+          </ol>
+          <pre id="log" class="log" aria-hidden="true"></pre>
+        </aside>
       </section>
 
-      <div style="margin-top: 2rem;">
-        <a href="./test.html" style="display: inline-block; background: var(--accent); color: #08101e; font-weight: 600; text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.9rem;">
-          🧪 Open Pipeline Test Webpage &rarr;
-        </a>
-      </div>
+      <section id="projects" class="block">
+        <h2>Projects</h2>
+        <ul class="projects">
+          <li>
+            <div>
+              <h3>GitHub Pages CI/CD pipeline</h3>
+              <p>This site. Every push to <code>main</code> is built with Vite, then published by GitHub Actions with no manual upload.</p>
+            </div>
+            <p class="stack">GitHub Actions, Vite, JavaScript</p>
+          </li>
+          <li>
+            <div>
+              <h3>Project name</h3>
+              <p>Describe what it does and what problem it solves in one or two sentences.</p>
+            </div>
+            <p class="stack">Python, Docker</p>
+          </li>
+          <li>
+            <div>
+              <h3>Project name</h3>
+              <p>Say what you built and what you learned from it.</p>
+            </div>
+            <p class="stack">Linux, Bash</p>
+          </li>
+        </ul>
+      </section>
 
-      <footer>
-        <p id="build-info"></p>
-      </footer>
+      <section id="skills" class="block">
+        <h2>Skills</h2>
+        <dl class="skills">
+          <div><dt>Automation</dt><dd>GitHub Actions, CI/CD, Git workflows</dd></div>
+          <div><dt>Build and run</dt><dd>Node.js, Vite, Docker (learning)</dd></div>
+          <div><dt>Foundations</dt><dd>Linux command line, HTML, CSS, JavaScript</dd></div>
+        </dl>
+      </section>
+
+      <section id="contact" class="block">
+        <h2>Contact</h2>
+        <p class="lede">Open to internships, junior DevOps roles and collaboration.</p>
+        <ul class="links">
+          <li><a href="mailto:you@example.com">you@example.com</a></li>
+          <li><a href="https://github.com/your-username">github.com/your-username</a></li>
+          <li><a href="https://www.linkedin.com/in/your-username">linkedin.com/in/your-username</a></li>
+        </ul>
+      </section>
     </main>
+
+    <footer class="foot">
+      <p id="build-info"></p>
+      <p><a href="./demo.html">Try the demo app</a> and <a href="./test.html">the pipeline test page</a></p>
+    </footer>
 
     <script type="module" src="/src/main.js"></script>
   </body>
