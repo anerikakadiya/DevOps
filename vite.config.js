@@ -14,8 +14,8 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         test: resolve(__dirname, 'test.html'),
+        demo: resolve(__dirname, 'demo.html'),
       },
     },
   },
 });
-
